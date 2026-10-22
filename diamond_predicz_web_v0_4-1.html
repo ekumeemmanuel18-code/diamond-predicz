@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="Diamond Predicz football match analysis, country and league directory, and rollover planner.">
+<title>Diamond Predicz — Match Centre</title>
+<style>
+:root{--bg:#080d18;--panel:#111a2b;--panel2:#17243a;--text:#f3f6fc;--muted:#aab7cc;--accent:#b7f34a;--blue:#70c8ff;--line:#293950;--warn:#ffd27a;--danger:#ff8d9b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at top,#14223a 0,#080d18 58%);color:var(--text);font:16px/1.5 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer}.topbar{position:sticky;top:0;z-index:10;background:#0b1220ed;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 16px}.topinner{max-width:1120px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{font-weight:950;font-size:1.1rem;letter-spacing:.3px}.brand span{color:var(--accent)}.badge{font-size:.72rem;border:1px solid #45602b;color:var(--accent);padding:4px 8px;border-radius:99px;white-space:nowrap}
+.layout{max-width:1120px;margin:auto;padding:18px 14px 42px;display:grid;grid-template-columns:225px minmax(0,1fr);gap:18px}.sidebar{align-self:start;position:sticky;top:78px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:10px}.navbtn{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);border:0;padding:12px;border-radius:10px;margin:2px 0;font-weight:700}.navbtn.active,.navbtn:hover{background:var(--panel2);color:var(--text)}.navbtn.active{box-shadow:inset 3px 0 var(--accent)}
+main{min-width:0}.page{display:none}.page.active{display:block}.hero{padding:10px 2px 18px}.eyebrow{color:var(--accent);font-size:.75rem;letter-spacing:1.5px;text-transform:uppercase;font-weight:850}.hero h1{font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.1;margin:8px 0}.hero p{color:var(--muted);max-width:720px;margin:8px 0}
+.card{background:linear-gradient(150deg,#131e31,#0f1727);border:1px solid var(--line);border-radius:16px;padding:17px;margin:0 0 15px;box-shadow:0 10px 30px #0002}.card h2{font-size:1.08rem;margin:0 0 12px}.card h3{font-size:.95rem;color:var(--blue);margin:17px 0 8px}.muted{color:var(--muted);font-size:.87rem}.notice{background:#27251d;border-left:4px solid var(--warn);padding:11px 13px;border-radius:9px;font-size:.84rem;color:#f6e4bb;margin:12px 0}.success{background:#17271b;border-left:4px solid var(--accent);padding:11px 13px;border-radius:9px;font-size:.84rem;margin:12px 0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.field{min-width:0}.field label{display:block;color:var(--muted);font-size:.82rem;margin:8px 0 5px}input,select{width:100%;min-width:0;background:#0a1220;border:1px solid #34445c;border-radius:10px;color:var(--text);padding:11px 12px}input:focus,select:focus,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}.btn{border:0;border-radius:10px;padding:12px 14px;font-weight:850;margin-top:12px}.primary{background:var(--accent);color:#152008}.secondary{background:var(--panel2);border:1px solid var(--line);color:var(--text)}.btnrow{display:flex;flex-wrap:wrap;gap:9px}.btnrow .btn{flex:1;min-width:130px}.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.statbox{background:var(--panel2);padding:12px;border-radius:11px;text-align:center}.statbox b{display:block;font-size:1.2rem}.statbox span{font-size:.75rem;color:var(--muted)}.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.row:last-child{border-bottom:0}.row b{text-align:right}.hidden{display:none!important}
+.alphabet{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0}.alphabet button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:7px;min-width:30px;padding:5px 7px;font-weight:750}.alphabet button:disabled{opacity:.3;cursor:not-allowed}.country-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:12px}.country-btn{text-align:left;background:#0c1525;border:1px solid var(--line);color:var(--text);border-radius:10px;padding:10px 12px}.country-btn:hover,.country-btn.selected{border-color:var(--accent);background:#17251a}.league-item{background:#0c1525;border:1px solid var(--line);padding:11px;border-radius:10px;margin:7px 0}.league-item b{display:block}.league-item small{color:var(--muted)}.tag{font-size:.72rem;color:var(--blue);border:1px solid #31506a;border-radius:7px;padding:3px 6px;white-space:nowrap}.footer{color:var(--muted);text-align:center;font-size:.78rem;padding:12px}
+@media(max-width:760px){.layout{grid-template-columns:1fr;padding:12px}.sidebar{position:static;display:flex;overflow:auto;gap:4px;padding:6px}.navbtn{white-space:nowrap;width:auto;flex:0 0 auto;padding:10px}.navbtn.active{box-shadow:inset 0 -3px var(--accent)}.topinner{align-items:flex-start}.country-list{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.grid,.grid3{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stats .statbox:last-child{grid-column:1/-1}.country-list{grid-template-columns:1fr}.card{padding:14px}.topbar{padding:10px 12px}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="topinner"><div class="brand">💎 DIAMOND <span>PREDICZ</span></div><span class="badge" id="modeBadge">FREE MODE · SUBSCRIPTIONS OFF</span></div></div>
+<div class="layout">
+<nav class="sidebar" aria-label="Main navigation">
+<button class="navbtn active" data-page="dashboard">⚽ Match Lab</button>
+<button class="navbtn" data-page="countries">🌍 Countries & Leagues</button>
+<button class="navbtn" data-page="rollover">🔄 Rollover</button>
+<button class="navbtn" data-page="subscription">💎 Subscription</button>
+<button class="navbtn" data-page="settings">⚙️ Data setup</button>
+</nav>
+<main>
+<section class="page active" id="dashboard">
+<div class="hero"><div class="eyebrow">Match intelligence</div><h1>Make every match easier to study.</h1><p>Analyze a fixture using team goal averages, inspect estimated outcomes, and keep a record of what happens. Estimates are not guarantees.</p></div>
+<div class="card"><h2>⚽ Match setup</h2><div class="grid"><div class="field"><label for="home">Home team</label><input id="home" value="Arsenal" maxlength="60"></div><div class="field"><label for="away">Away team</label><input id="away" value="Chelsea" maxlength="60"></div></div><p class="muted">This fallback analyzer works without an API connection. Enter reliable recent averages below; team names alone do not automatically fetch statistics.</p>
+<div class="grid"><div><b>Home team averages</b><div class="field"><label for="hs">Goals scored per match</label><input id="hs" type="number" min="0" max="8" step=".05" value="1.8"></div><div class="field"><label for="hc">Goals conceded per match</label><input id="hc" type="number" min="0" max="8" step=".05" value="1.1"></div></div><div><b>Away team averages</b><div class="field"><label for="as">Goals scored per match</label><input id="as" type="number" min="0" max="8" step=".05" value="1.4"></div><div class="field"><label for="ac">Goals conceded per match</label><input id="ac" type="number" min="0" max="8" step=".05" value="1.3"></div></div></div>
+<div class="btnrow"><button class="btn primary" id="analyzeBtn">ANALYZE MATCH</button><button class="btn secondary" id="resetBtn">RESET EXAMPLE</button></div></div>
+<div class="card results" id="results"><h2 id="resultTitle">Estimated outcomes</h2><div class="stats" id="outcomes"></div><h3>Goal markets</h3><div id="markets"></div><h3>Most likely scorelines</h3><div id="scores"></div><p class="muted" id="modelNote"></p></div>
+<div class="card"><h2>🔌 Fixture data status</h2><p class="muted" id="fixtureStatus">No live backend configured. The manual analyzer is available.</p><button class="btn secondary" id="testBackendBtn">TEST BACKEND CONNECTION</button><p class="muted">Use Data setup to connect a secure backend. Keep your football API key on the server, never in this HTML file.</p></div>
+<div class="notice">Predictions are statistical estimates, not certain outcomes. This prototype does not account for lineups, injuries, weather, pitch conditions, or every competition-specific factor. Please gamble responsibly.</div>
+</section>
+
+<section class="page" id="countries">
+<div class="hero"><div class="eyebrow">Competition directory</div><h1>Countries A–Z</h1><p>Choose a country to load its available leagues and divisions. The complete live league catalogue must come from a connected football-data backend; this page does not invent missing league data.</p></div>
+<div class="card"><div class="field"><label for="countrySearch">Search countries</label><input id="countrySearch" type="search" placeholder="Type a country name…"></div><div class="alphabet" id="alphabet" aria-label="Filter by first letter"></div><div class="country-list" id="countryList"></div></div>
+<div class="card"><h2 id="leagueHeading">Select a country</h2><p class="muted" id="leagueSub">Available leagues and divisions will appear here when the backend is connected.</p><div id="leagueList"><p class="muted">Choose a country above. The live endpoint should return every league/division available to your provider, including season and league ID when provided.</p></div><button class="btn secondary" id="loadLeaguesBtn" disabled>LOAD LEAGUES</button><p class="muted">Backend contract: <code>GET /api/countries</code> and <code>GET /api/leagues?country=CountryName</code>.</p></div>
+</section>
+
+<section class="page" id="rollover">
+<div class="hero"><div class="eyebrow">Rollover planner</div><h1>Build a rollover plan.</h1><p>Calculate theoretical returns and create a simple daily ticket checklist. The tool does not place bets or guarantee results.</p></div>
+<div class="card"><h2>Rollover settings</h2><div class="grid"><div class="field"><label for="stake">Starting amount (XAF)</label><input id="stake" type="number" min="0" step="100" value="1000"></div><div class="field"><label for="odds">Combined odds per ticket</label><input id="odds" type="number" min="1" max="100" step=".01" value="2.00"></div><div class="field"><label for="days">Number of successful rollover steps</label><input id="days" type="number" min="1" max="60" step="1" value="5"></div><div class="field"><label for="reinvest">Reinvest returns each step?</label><select id="reinvest"><option value="yes">Yes — compound</option><option value="no">No — same starting stake</option></select></div></div><button class="btn primary" id="calcRollover">CALCULATE PLAN</button></div>
+<div class="card"><h2>Projected result</h2><div class="stats"><div class="statbox"><span>Starting amount</span><b id="startOut">1,000 XAF</b></div><div class="statbox"><span>Projected amount</span><b id="endOut">32,000 XAF</b></div><div class="statbox"><span>Projected gain</span><b id="gainOut">31,000 XAF</b></div></div><p class="muted" id="rolloverFormula">Illustrative calculation assumes every step wins and excludes fees, limits and losses.</p><h3>Step-by-step schedule</h3><div id="rolloverSchedule"></div></div>
+<div class="card"><h2>Allowed rollover market checklist</h2><p class="muted">Use this as a planning checklist only. Confirm each market and odds with your bookmaker before making any decision.</p><div class="grid"><div><b>Goals</b><div id="goalMarkets"></div></div><div><b>Team goals & double chance</b><div id="teamMarkets"></div></div></div><div class="notice">A rollover can lose the full amount at any step. The projected amount is a mathematical scenario, not a promise of income.</div></div>
+</section>
+
+<section class="page" id="subscription">
+<div class="hero"><div class="eyebrow">Membership</div><h1>Diamond Predicz subscription</h1><p>The subscription area is prepared, but the app is intentionally free right now. No payment will be requested or processed.</p></div>
+<div class="card"><div class="success"><b>FREE ACCESS IS ON</b><br>Subscription enforcement is disabled by default, as requested. You can choose to enable paid access later after configuring and testing a secure payment backend.</div><h2>Get Rich plan — prepared, not active</h2><div class="stats"><div class="statbox"><span>Planned price</span><b>25,000 XAF</b></div><div class="statbox"><span>Planned duration</span><b>31 days</b></div><div class="statbox"><span>Current status</span><b>Free</b></div></div><p class="muted">Planned payment options: MTN Mobile Money Cameroon and Orange Money Cameroon. Payment processing, receipts, subscription expiry and account activation must be implemented securely on the server before accepting money.</p><button class="btn secondary" disabled>SUBSCRIBE — NOT ENABLED</button></div>
+<div class="card"><h2>Owner activation switch</h2><p class="muted">When you decide to monetize, change <code>SUBSCRIPTIONS_ENABLED</code> from <code>false</code> to <code>true</code> in the app configuration and connect a verified backend. Do not enable this switch alone in production: frontend-only gates can be bypassed. Premium data must be enforced server-side.</p><div class="row"><span>Subscription feature flag</span><b id="subscriptionFlag">OFF (free app)</b></div><div class="row"><span>Payment gateway</span><b>Not connected</b></div><div class="row"><span>Account verification</span><b>Not connected</b></div></div>
+</section>
+
+<section class="page" id="settings">
+<div class="hero"><div class="eyebrow">Integration settings</div><h1>Connect your data backend.</h1><p>Use a secure server or serverless function to call the football API. Never put the provider's secret API key in the browser.</p></div>
+<div class="card"><h2>Backend URL</h2><div class="field"><label for="backendUrl">Your deployed backend base URL</label><input id="backendUrl" type="url" placeholder="https://your-backend.example.com"></div><div class="btnrow"><button class="btn primary" id="saveBackendBtn">SAVE BACKEND URL</button><button class="btn secondary" id="clearBackendBtn">CLEAR</button></div><p class="muted">The URL is saved only in this browser's local storage. It is not a secret. Expected endpoints: <code>/api/health</code>, <code>/api/countries</code>, <code>/api/leagues?country=...</code>, and optionally <code>/api/fixtures?date=YYYY-MM-DD</code>.</p><div id="backendMessage" class="muted" aria-live="polite"></div></div>
+<div class="card"><h2>Deployment checklist</h2><div class="row"><span>Responsive mobile and desktop layout</span><b>✓ Included</b></div><div class="row"><span>HTTPS hosting</span><b>Required</b></div><div class="row"><span>Secret API key kept server-side</span><b>Required</b></div><div class="row"><span>Live leagues/fixtures backend</span><b>Not connected yet</b></div><div class="row"><span>Authentication and payment backend</span><b>Not connected yet</b></div><div class="row"><span>Terms, privacy policy and support contact</span><b>Before public launch</b></div><div class="notice">This is a deployment-ready static prototype, not a fully production-backed service yet. Hosting the HTML alone will not create live fixtures, accounts, push notifications or payment processing.</div></div>
+</section>
+<div class="footer">💎 Diamond Predicz · Responsive prototype · Data availability depends on your provider plan and backend.</div>
+</main>
+</div>
+<script>
+/* Owner-controlled feature flag. Keep false until payment and server-side access control are ready. */
+const SUBSCRIPTIONS_ENABLED = false;
+const COUNTRIES = [
+"Afghanistan","Albania","Algeria","Andorra","Angola","Antigua and Barbuda","Argentina","Armenia","Australia","Austria","Azerbaijan",
+"Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Burkina Faso","Burundi",
+"Cabo Verde","Cambodia","Cameroon","Canada","Central African Republic","Chad","Chile","China","Colombia","Comoros","Congo","Costa Rica","Côte d’Ivoire","Croatia","Cuba","Cyprus","Czechia",
+"Denmark","Djibouti","Dominica","Dominican Republic","DR Congo",
+"Ecuador","Egypt","El Salvador","England","Equatorial Guinea","Eritrea","Estonia","Eswatini","Ethiopia",
+"Fiji","Finland","France",
+"Gabon","Gambia","Georgia","Germany","Ghana","Greece","Grenada","Guatemala","Guinea","Guinea-Bissau","Guyana",
+"Haiti","Honduras","Hong Kong","Hungary",
+"Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy",
+"Jamaica","Japan","Jordan",
+"Kazakhstan","Kenya","Kosovo","Kuwait","Kyrgyzstan",
+"Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg",
+"Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Morocco","Mozambique","Myanmar",
+"Namibia","Nepal","Netherlands","New Zealand","Nicaragua","Niger","Nigeria","North Korea","North Macedonia","Northern Ireland","Norway",
+"Oman",
+"Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal",
+"Qatar",
+"Romania","Russia","Rwanda",
+"Saint Kitts and Nevis","Saint Lucia","Saint Vincent and the Grenadines","San Marino","São Tomé and Príncipe","Saudi Arabia","Scotland","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","Solomon Islands","Somalia","South Africa","South Korea","South Sudan","Spain","Sri Lanka","Sudan","Suriname","Sweden","Switzerland","Syria",
+"Taiwan","Tajikistan","Tanzania","Thailand","Togo","Trinidad and Tobago","Tunisia","Turkey","Turkmenistan",
+"Uganda","Ukraine","United Arab Emirates","United States","Uruguay","Uzbekistan",
+"Vanuatu","Venezuela","Vietnam",
+"Wales",
+"Yemen",
+"Zambia","Zimbabwe"
+].sort((a,b)=>a.localeCompare(b));
+let selectedCountry = ""; let activeLetter = "ALL";
+const $ = id => document.getElementById(id);
+document.querySelectorAll(".navbtn").forEach(btn=>btn.addEventListener("click",()=>{
+ document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b===btn));
+ document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id===btn.dataset.page));
+ window.scrollTo({top:0,behavior:"smooth"});
+}));
+function val(id){const n=Number($(id).value);return Number.isFinite(n)?Math.max(0,Math.min(8,n)):0}
+function pois(k,l){if(l<=0)return k===0?1:0;let p=Math.exp(-l);for(let i=1;i<=k;i++)p*=l/i;return p}
+function analyze(){
+ const h=$("home").value.trim()||"Home";const a=$("away").value.trim()||"Away";
+ const lh=Math.min(5,(val("hs")+val("ac"))/2*1.08),la=Math.min(5,(val("as")+val("hc"))/2);
+ const hp=[],ap=[];for(let i=0;i<=10;i++){hp[i]=pois(i,lh);ap[i]=pois(i,la)}
+ let hw=0,d=0,aw=0,btts=0,sc=[];
+ for(let i=0;i<=10;i++)for(let j=0;j<=10;j++){const p=hp[i]*ap[j];if(i>j)hw+=p;else if(i===j)d+=p;else aw+=p;if(i>0&&j>0)btts+=p;sc.push({s:i+"–"+j,p})}
+ function over(n){let p=0;for(let i=0;i<=10;i++)for(let j=0;j<=10;j++)if(i+j>n)p+=hp[i]*ap[j];return p}
+ function teamOver(arr,n){let p=0;for(let i=n+1;i<=10;i++)p+=arr[i];return p}
+ const pct=x=>(x*100).toFixed(1)+"%";
+ $("resultTitle").textContent=h+" vs "+a+" — model estimates";
+ const outs=[["Home win",hw],["Draw",d],["Away win",aw],["Double chance 1X",hw+d],["Double chance X2",d+aw],["Either team wins",hw+aw]];
+ $("outcomes").innerHTML=outs.map(x=>`<div class="statbox"><span>${x[0]}</span><b>${pct(x[1])}</b></div>`).join("");
+ const ms=[["Over 0.5 goals",over(0)],["Over 1.5 goals",over(1)],["Over 2.5 goals",over(2)],["Over 3.5 goals",over(3)],["Under 2.5 goals",1-over(2)],["Under 3.5 goals",1-over(3)],["Under 4.5 goals",1-over(4)],["Both teams to score — Yes",btts],[h+" over 0.5 goals",teamOver(hp,0)],[h+" over 1.5 goals",teamOver(hp,1)],[a+" over 0.5 goals",teamOver(ap,0)],[a+" over 1.5 goals",teamOver(ap,1)]];
+ $("markets").innerHTML=ms.map(x=>`<div class="row"><span>${x[0]}</span><b>${pct(x[1])}</b></div>`).join("");
+ sc.sort((x,y)=>y.p-x.p);$("scores").innerHTML=sc.slice(0,6).map(x=>`<div class="row"><span>${h} ${x.s} ${a}</span><b>${pct(x.p)}</b></div>`).join("");
+ $("modelNote").textContent=`Illustrative expected goals: ${h} ${lh.toFixed(2)}, ${a} ${la.toFixed(2)}. Simplified Poisson model using only the averages entered; estimates are approximate.`;
+ $("results").classList.remove("hidden");
+}
+$("analyzeBtn").addEventListener("click",analyze);
+$("resetBtn").addEventListener("click",()=>{Object.assign($("home"),{value:"Arsenal"});Object.assign($("away"),{value:"Chelsea"});$("hs").value=1.8;$("hc").value=1.1;$("as").value=1.4;$("ac").value=1.3;analyze()});
+function buildCountries(){
+ const letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");$("alphabet").innerHTML="";
+ const present=new Set(COUNTRIES.map(c=>c[0].toUpperCase()));
+ const all=document.createElement("button");all.textContent="ALL";all.disabled=false;all.onclick=()=>{activeLetter="ALL";buildAlphabet();renderCountries()};$("alphabet").appendChild(all);
+ letters.forEach(l=>{const b=document.createElement("button");b.textContent=l;b.disabled=!present.has(l);b.onclick=()=>{activeLetter=l;buildAlphabet();renderCountries()};$("alphabet").appendChild(b)});buildAlphabet();renderCountries();
+}
+function buildAlphabet(){$("alphabet").querySelectorAll("button").forEach(b=>b.classList.toggle("selected",(b.textContent===activeLetter)))}
+function renderCountries(){
+ const q=$("countrySearch").value.trim().toLowerCase();
+ const items=COUNTRIES.filter(c=>(activeLetter==="ALL"||c[0].toUpperCase()===activeLetter)&&c.toLowerCase().includes(q));
+ $("countryList").innerHTML=items.map(c=>`<button class="country-btn ${c===selectedCountry?"selected":""}" data-country="${encodeURIComponent(c)}">${c}</button>`).join("")||'<p class="muted">No matching countries.</p>';
+ $("countryList").querySelectorAll("[data-country]").forEach(b=>b.addEventListener("click",()=>selectCountry(decodeURIComponent(b.dataset.country))));
+}
+async function selectCountry(country){
+ selectedCountry=country;renderCountries();$("leagueHeading").textContent=country+" — leagues & divisions";$("leagueSub").textContent="Checking the connected provider for available competitions…";$("leagueList").innerHTML='<p class="muted">Loading leagues…</p>';$("loadLeaguesBtn").disabled=false;await loadLeagues();
+}
+async function loadLeagues(){
+ if(!selectedCountry)return;
+ const base=localStorage.getItem("dp_backend_url");
+ if(!base){$("leagueSub").textContent="Backend not configured";$("leagueList").innerHTML='<div class="notice">Connect your backend in Data setup to load the complete current league/division list for this country. This prototype intentionally does not fabricate a list.</div>';return}
+ try{
+  const url=new URL("/api/leagues",base);url.searchParams.set("country",selectedCountry);
+  const r=await fetch(url,{headers:{Accept:"application/json"}});
+  if(!r.ok)throw new Error("Backend returned HTTP "+r.status);
+  const data=await r.json();const leagues=Array.isArray(data)?data:(data.leagues||data.response||[]);
+  if(!leagues.length){$("leagueList").innerHTML='<p class="muted">No leagues were returned for this country. This may mean the provider has no coverage or the backend response format needs adapting.</p>';return}
+  $("leagueSub").textContent=leagues.length+" league/competition entries returned by the connected backend.";
+  $("leagueList").innerHTML=leagues.map(item=>{const l=item.league||item;const country=item.country||{};const seasons=Array.isArray(item.seasons)?item.seasons.map(s=>s.year).filter(Boolean).join(", "):"";return `<div class="league-item"><b>${escapeHtml(l.name||item.name||"Unnamed competition")}</b><small>${escapeHtml(l.type||item.type||"League/competition")} ${l.id||item.id?" · ID "+escapeHtml(String(l.id||item.id)):""} ${seasons?" · Seasons: "+escapeHtml(seasons):""}</small></div>`}).join("");
+ }catch(e){$("leagueSub").textContent="Could not load leagues";$("leagueList").innerHTML=`<div class="notice">${escapeHtml(e.message)}. Check the backend URL, endpoint and server CORS settings.</div>`}
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+$("countrySearch").addEventListener("input",renderCountries);$("loadLeaguesBtn").addEventListener("click",loadLeagues);
+const goalMarketNames=["Over 1.5 total goals","Over 2.5 total goals","Over 0.5 first-half goals","Under 3.5 total goals","Under 4.5 total goals"];
+const teamMarketNames=["Home team over 0.5 goals","Home team over 1.5 goals","Away team over 0.5 goals","Away team over 1.5 goals","Home win or draw (1X)","Away win or draw (X2)","Either team wins (12)"];
+function checkList(target,items){$(target).innerHTML=items.map((s,i)=>`<label style="display:flex;align-items:flex-start;gap:9px;padding:7px 0;color:var(--muted)"><input type="checkbox" style="width:auto;margin-top:4px" data-market="${escapeHtml(s)}"> <span>${escapeHtml(s)}</span></label>`).join("")}
+function calculateRollover(){
+ const stake=Math.max(0,Number($("stake").value)||0),odds=Math.max(1,Number($("odds").value)||1),days=Math.max(1,Math.min(60,Math.floor(Number($("days").value)||1))),compound=$("reinvest").value==="yes";
+ let amount=stake,rows=[];
+ for(let i=1;i<=days;i++){const before=compound?amount:stake;const after=before*odds;rows.push({i,before,after});if(compound)amount=after}
+ const end=compound?amount:stake*odds;const fmt=n=>Math.round(n).toLocaleString("en-US")+" XAF";
+ $("startOut").textContent=fmt(stake);$("endOut").textContent=fmt(end);$("gainOut").textContent=fmt(end-stake);
+ $("rolloverFormula").textContent=compound?`${fmt(stake)} × ${odds.toFixed(2)} odds compounded for ${days} successful step(s).`:`Same stake of ${fmt(stake)} each step; each step's theoretical return is ${fmt(stake*odds)}.`;
+ $("rolloverSchedule").innerHTML=rows.map(r=>`<div class="row"><span>Step ${r.i}</span><span>${fmt(r.before)} × ${odds.toFixed(2)}</span><b>${fmt(r.after)}</b></div>`).join("");
+}
+$("calcRollover").addEventListener("click",calculateRollover);
+async function testBackend(){
+ const base=localStorage.getItem("dp_backend_url");if(!base){$("fixtureStatus").textContent="No backend URL saved. Open Data setup and enter your backend URL.";return}
+ try{const r=await fetch(new URL("/api/health",base),{headers:{Accept:"application/json"}});if(!r.ok)throw new Error("HTTP "+r.status);const data=await r.json();$("fixtureStatus").textContent="Backend reachable: "+JSON.stringify(data); }catch(e){$("fixtureStatus").textContent="Backend test failed: "+e.message+". Confirm HTTPS, /api/health and CORS."}
+}
+$("testBackendBtn").addEventListener("click",testBackend);
+$("saveBackendBtn").addEventListener("click",()=>{let v=$("backendUrl").value.trim();if(!v){$("backendMessage").textContent="Enter a backend URL first.";return}try{const u=new URL(v);if(!["https:","http:"].includes(u.protocol))throw new Error();localStorage.setItem("dp_backend_url",u.origin);$("backendUrl").value=u.origin;$("backendMessage").textContent="Saved backend URL: "+u.origin+" (this browser only).";$("fixtureStatus").textContent="Backend URL saved. Tap TEST BACKEND CONNECTION to verify it.";}catch{$("backendMessage").textContent="Enter a valid URL, e.g. https://your-backend.example.com";}});
+$("clearBackendBtn").addEventListener("click",()=>{localStorage.removeItem("dp_backend_url");$("backendUrl").value="";$("backendMessage").textContent="Backend URL cleared from this browser."});
+$("subscriptionFlag").textContent=SUBSCRIPTIONS_ENABLED?"ON (server-side enforcement still required)":"OFF (free app)";
+$("modeBadge").textContent=SUBSCRIPTIONS_ENABLED?"SUBSCRIPTION MODE CONFIGURED":"FREE MODE · SUBSCRIPTIONS OFF";
+checkList("goalMarkets",goalMarketNames);checkList("teamMarkets",teamMarketNames);buildCountries();analyze();calculateRollover();
+</script>
+</body></html>
